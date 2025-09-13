@@ -13,6 +13,12 @@ public class ApplicationDbContext : DbContext
     public DbSet<Schedule> Schedules => Set<Schedule>();
     public DbSet<ZonePermission> ZonePermissions => Set<ZonePermission>();
 
+    public DbSet<AccessAttempt> AccessAttempts => Set<AccessAttempt>();
+    public DbSet<AuditLog> AuditLogs => Set<AuditLog>();
+    public DbSet<AccessTemplate> AccessTemplates => Set<AccessTemplate>();
+    public DbSet<VisitorBadge> VisitorBadges => Set<VisitorBadge>();
+    public DbSet<ReasonCode> ReasonCodes => Set<ReasonCode>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -70,6 +76,58 @@ public class ApplicationDbContext : DbContext
                 .OnDelete(DeleteBehavior.Cascade);
             // Composite uniqueness (active): (PersonProfileId, ZoneId) when RevokedAt IS NULL
             // Represented via full index; partial filter to be added manually in migration placeholder.
+        });
+
+        // AccessAttempt
+        modelBuilder.Entity<AccessAttempt>(e =>
+        {
+            e.HasKey(a => a.Id);
+            e.HasOne(a => a.Credential)
+                .WithMany()
+                .HasForeignKey(a => a.CredentialId)
+                .OnDelete(DeleteBehavior.Cascade);
+            e.HasOne(a => a.Zone)
+                .WithMany()
+                .HasForeignKey(a => a.ZoneId)
+                .OnDelete(DeleteBehavior.Cascade);
+            e.HasIndex(a => a.Timestamp);
+        });
+
+        // AuditLog
+        modelBuilder.Entity<AuditLog>(e =>
+        {
+            e.HasKey(a => a.Id);
+            e.Property(a => a.Data).HasColumnType("jsonb");
+            e.HasIndex(a => new { a.EntityType, a.EntityId });
+            e.HasIndex(a => a.CreatedAt);
+        });
+
+        // AccessTemplate
+        modelBuilder.Entity<AccessTemplate>(e =>
+        {
+            e.HasKey(t => t.Id);
+            e.HasIndex(t => t.Name).IsUnique();
+            e.Property(t => t.TemplateData).HasColumnType("jsonb");
+        });
+
+        // VisitorBadge
+        modelBuilder.Entity<VisitorBadge>(e =>
+        {
+            e.HasKey(v => v.Id);
+            e.HasOne(v => v.PersonProfile)
+                .WithMany()
+                .HasForeignKey(v => v.PersonProfileId)
+                .OnDelete(DeleteBehavior.Cascade);
+            e.HasOne(v => v.HostProfile)
+                .WithMany()
+                .HasForeignKey(v => v.HostProfileId)
+                .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        // ReasonCode
+        modelBuilder.Entity<ReasonCode>(e =>
+        {
+            e.HasKey(r => r.Code);
         });
     }
 }

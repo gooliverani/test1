@@ -27,6 +27,7 @@ paths:
               $ref: '#/components/schemas/PersonProfileCreate'
       responses:
         '201': { description: Created }
+        '400': { $ref: '#/components/responses/ValidationError' }
   /api/profiles/{id}:
     get:
       summary: Get profile by id
@@ -38,6 +39,250 @@ paths:
       responses:
         '200': { description: OK, content: { application/json: { schema: { $ref: '#/components/schemas/PersonProfile' } } } }
         '404': { description: Not Found }
+    patch:
+      summary: Update profile (status / attributes)
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PersonProfileUpdate'
+      responses:
+        '200': { description: Updated, content: { application/json: { schema: { $ref: '#/components/schemas/PersonProfile' } } } }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '404': { description: Not Found }
+
+  /api/profiles/{id}/credentials:
+    post:
+      summary: Issue credential to profile
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CredentialIssue'
+      responses:
+        '201': { description: Issued, content: { application/json: { schema: { $ref: '#/components/schemas/Credential' } } } }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '404': { description: Not Found }
+
+  /api/credentials/{id}/revoke:
+    post:
+      summary: Revoke credential
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/CredentialRevoke' }
+      responses:
+        '200': { description: Revoked, content: { application/json: { schema: { $ref: '#/components/schemas/Credential' } } } }
+        '404': { description: Not Found }
+
+  /api/profiles/{id}/zone-permissions:
+    post:
+      summary: Grant zone permission to profile
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ZonePermissionGrant' }
+      responses:
+        '201': { description: Granted, content: { application/json: { schema: { $ref: '#/components/schemas/ZonePermission' } } } }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '404': { description: Not Found }
+
+  /api/zone-permissions/{id}:
+    delete:
+      summary: Revoke zone permission
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '204': { description: Revoked }
+        '404': { description: Not Found }
+
+  /api/zones:
+    get:
+      summary: List zones
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/Zone' } } } } }
+    post:
+      summary: Create zone
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ZoneCreate' }
+      responses:
+        '201': { description: Created, content: { application/json: { schema: { $ref: '#/components/schemas/Zone' } } } }
+        '400': { $ref: '#/components/responses/ValidationError' }
+
+  /api/schedules:
+    get:
+      summary: List schedules
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/Schedule' } } } } }
+    post:
+      summary: Create schedule
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ScheduleCreate' }
+      responses:
+        '201': { description: Created, content: { application/json: { schema: { $ref: '#/components/schemas/Schedule' } } } }
+        '400': { $ref: '#/components/responses/ValidationError' }
+
+  /api/templates:
+    post:
+      summary: Create access template
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/AccessTemplateCreate' }
+      responses:
+        '201': { description: Created, content: { application/json: { schema: { $ref: '#/components/schemas/AccessTemplate' } } } }
+        '400': { $ref: '#/components/responses/ValidationError' }
+
+  /api/profiles/{id}/apply-template/{templateId}:
+    post:
+      summary: Apply template to profile
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string, format: uuid }
+        - in: path
+          name: templateId
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '200': { description: Applied, content: { application/json: { schema: { $ref: '#/components/schemas/ApplyTemplateResult' } } } }
+        '404': { description: Not Found }
+
+  /api/workday/webhook:
+    post:
+      summary: Workday employee webhook
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/WorkdayEmployeeEvent' }
+      responses:
+        '202': { description: Accepted }
+        '200': { description: Idempotent Repeat Accepted }
+        '400': { $ref: '#/components/responses/ValidationError' }
+
+  /api/access-attempts:
+    get:
+      summary: List access attempts
+      parameters:
+        - in: query
+          name: profileId
+          schema: { type: string, format: uuid }
+        - in: query
+          name: zoneId
+          schema: { type: string, format: uuid }
+        - in: query
+          name: from
+          schema: { type: string, format: date-time }
+        - in: query
+          name: to
+          schema: { type: string, format: date-time }
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/AccessAttempt' } } } } }
+
+  /api/reports/access-summary:
+    get:
+      summary: Access summary report
+      parameters:
+        - in: query
+          name: from
+          schema: { type: string, format: date-time }
+        - in: query
+          name: to
+          schema: { type: string, format: date-time }
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { $ref: '#/components/schemas/AccessSummaryReport' } } } }
+
+  /api/reports/zone-access:
+    get:
+      summary: Zone access report (CSV or JSON)
+      parameters:
+        - in: query
+          name: zoneId
+          required: true
+          schema: { type: string, format: uuid }
+        - in: query
+          name: from
+          schema: { type: string, format: date-time }
+        - in: query
+          name: to
+          schema: { type: string, format: date-time }
+        - in: query
+          name: format
+          schema: { type: string, enum: [json, csv], default: json }
+      responses:
+        '200': { description: OK }
+
+  /api/reason-codes:
+    get:
+      summary: List reason codes
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/ReasonCode' } } } } }
+
+  /api/visitor/badges:
+    post:
+      summary: Issue visitor badge
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/VisitorBadgeIssue' }
+      responses:
+        '201': { description: Issued, content: { application/json: { schema: { $ref: '#/components/schemas/VisitorBadge' } } } }
+        '400': { $ref: '#/components/responses/ValidationError' }
+
+  /api/visitor/badges/{id}/revoke:
+    post:
+      summary: Revoke visitor badge
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '200': { description: Revoked, content: { application/json: { schema: { $ref: '#/components/schemas/VisitorBadge' } } } }
+        '404': { description: Not Found }
+
+  /hubs/access-events:
+    get:
+      summary: SignalR negotiation (documentation placeholder)
+      responses:
+        '200': { description: Negotiated }
 components:
   schemas:
     PersonProfile:
@@ -56,3 +301,158 @@ components:
         displayName: { type: string }
         type: { type: string, enum: [Employee, Contractor, Visitor] }
         department: { type: string }
+    PersonProfileUpdate:
+      type: object
+      properties:
+        displayName: { type: string }
+        status: { type: string, enum: [Active, Suspended, Deactivated] }
+        department: { type: string }
+    Credential:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        personProfileId: { type: string, format: uuid }
+        identifier: { type: string }
+        type: { type: string, enum: [Card, Mobile, TempVisitor] }
+        status: { type: string, enum: [Active, Revoked, Expired] }
+        issuedAt: { type: string, format: date-time }
+        expiresAt: { type: string, format: date-time, nullable: true }
+        revokedAt: { type: string, format: date-time, nullable: true }
+        revocationReason: { type: string, nullable: true }
+    CredentialIssue:
+      type: object
+      required: [identifier, type]
+      properties:
+        identifier: { type: string }
+        type: { type: string, enum: [Card, Mobile, TempVisitor] }
+        expiresAt: { type: string, format: date-time, nullable: true }
+    CredentialRevoke:
+      type: object
+      required: [reason]
+      properties:
+        reason: { type: string }
+    Zone:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        name: { type: string }
+        description: { type: string }
+    ZoneCreate:
+      type: object
+      required: [name]
+      properties:
+        name: { type: string }
+        description: { type: string }
+    Schedule:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        name: { type: string }
+        timeRules: { type: object }
+        timezone: { type: string }
+    ScheduleCreate:
+      type: object
+      required: [name, timeRules, timezone]
+      properties:
+        name: { type: string }
+        timeRules: { type: object }
+        timezone: { type: string }
+    ZonePermission:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        personProfileId: { type: string, format: uuid }
+        zoneId: { type: string, format: uuid }
+        scheduleId: { type: string, format: uuid }
+        grantedAt: { type: string, format: date-time }
+        revokedAt: { type: string, format: date-time, nullable: true }
+    ZonePermissionGrant:
+      type: object
+      required: [zoneId, scheduleId]
+      properties:
+        zoneId: { type: string, format: uuid }
+        scheduleId: { type: string, format: uuid }
+    AccessAttempt:
+      type: object
+      properties:
+        id: { type: integer }
+        credentialId: { type: string, format: uuid }
+        zoneId: { type: string, format: uuid }
+        outcome: { type: string, enum: [Allow, Deny] }
+        reasonCode: { type: string, nullable: true }
+        timestamp: { type: string, format: date-time }
+    AccessSummaryReport:
+      type: object
+      properties:
+        totalAttempts: { type: integer }
+        allowCount: { type: integer }
+        denyCount: { type: integer }
+        uniqueProfiles: { type: integer }
+    AccessTemplate:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        name: { type: string }
+        version: { type: integer }
+        templateData: { type: object }
+    AccessTemplateCreate:
+      type: object
+      required: [name, templateData]
+      properties:
+        name: { type: string }
+        templateData: { type: object }
+    ApplyTemplateResult:
+      type: object
+      properties:
+        profileId: { type: string, format: uuid }
+        templateId: { type: string, format: uuid }
+        grantedPermissions: { type: integer }
+    ReasonCode:
+      type: object
+      properties:
+        code: { type: string }
+        category: { type: string }
+        description: { type: string }
+        active: { type: boolean }
+    VisitorBadge:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        personProfileId: { type: string, format: uuid }
+        hostProfileId: { type: string, format: uuid }
+        expiresAt: { type: string, format: date-time }
+        status: { type: string, enum: [Active, Expired, Revoked] }
+    VisitorBadgeIssue:
+      type: object
+      required: [personProfileId, hostProfileId, expiresAt]
+      properties:
+        personProfileId: { type: string, format: uuid }
+        hostProfileId: { type: string, format: uuid }
+        expiresAt: { type: string, format: date-time }
+    WorkdayEmployeeEvent:
+      type: object
+      required: [externalId, displayName, type]
+      properties:
+        externalId: { type: string }
+        displayName: { type: string }
+        type: { type: string, enum: [Employee, Contractor] }
+        department: { type: string }
+    Error:
+      type: object
+      properties:
+        traceId: { type: string }
+        message: { type: string }
+        errors: { type: object, additionalProperties: { type: array, items: { type: string } } }
+    ValidationProblemDetails:
+      allOf:
+        - $ref: '#/components/schemas/Error'
+      properties:
+        status: { type: integer }
+        title: { type: string }
+        detail: { type: string }
+  responses:
+    ValidationError:
+      description: Validation error
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ValidationProblemDetails' }

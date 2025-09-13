@@ -1,7 +1,6 @@
 using Serilog;
-
-builder.Host.UseSerilog();
-
+using Microsoft.EntityFrameworkCore;
+using AccessControl.Api.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +12,10 @@ Log.Logger = new LoggerConfiguration()
     .CreateLogger();
 
 builder.Host.UseSerilog();
+
+// Add Entity Framework with PostgreSQL
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Register application services for DI
 builder.Services.AddScoped<AccessControl.Api.Services.AccessDecisionService>();
@@ -29,6 +32,17 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Add CORS support for frontend
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -36,6 +50,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Enable CORS
+app.UseCors("AllowFrontend");
 
 app.UseSerilogRequestLogging();
 app.MapControllers();

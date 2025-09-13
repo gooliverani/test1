@@ -1,5 +1,7 @@
 using AccessControl.Api.Models;
 
+using AccessControl.Api.Data;
+
 namespace AccessControl.Api.Services;
 
 public class ReasonCodeService

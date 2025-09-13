@@ -1,13 +1,28 @@
 <template>
-  <v-app>
-    <v-app-bar flat density="comfortable" color="primary">
-      <v-toolbar-title>Access Control</v-toolbar-title>
-    </v-app-bar>
-    <v-main>
-      <router-view />
-    </v-main>
-  </v-app>
+  <div id="app">
+    <router-view />
+  </div>
 </template>
+
 <script setup lang="ts">
-// Placeholder root component
+// Clean root component for our dashboard
 </script>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #f8fafc;
+  color: #2d3748;
+  line-height: 1.6;
+}
+
+#app {
+  min-height: 100vh;
+}
+</style>

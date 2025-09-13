@@ -1,0 +1,1077 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AccessControl.Api</name>
+    </assembly>
+    <members>
+        <member name="T:AccessControl.Api.Controllers.EmployeesController">
+            <summary>
+            Controller for managing employee profiles
+            </summary>
+        </member>
+        <member name="M:AccessControl.Api.Controllers.EmployeesController.#ctor(AccessControl.Api.Services.ProfileService,AccessControl.Api.Data.ApplicationDbContext)">
+            <summary>
+            Initializes a new instance of EmployeesController
+            </summary>
+            <param name="profileService">Profile service</param>
+            <param name="context">Database context</param>
+        </member>
+        <member name="M:AccessControl.Api.Controllers.EmployeesController.GetEmployees">
+            <summary>
+            Get all employee profiles
+            </summary>
+            <returns>List of employee profiles</returns>
+        </member>
+        <member name="M:AccessControl.Api.Controllers.EmployeesController.GetEmployee(System.Int32)">
+            <summary>
+            Get a specific employee profile by ID
+            </summary>
+            <param name="id">Employee ID</param>
+            <returns>Employee profile</returns>
+        </member>
+        <member name="M:AccessControl.Api.Controllers.EmployeesController.CreateEmployee(AccessControl.Api.Models.CreateEmployeeRequest)">
+            <summary>
+            Create a new employee profile
+            </summary>
+            <param name="request">Employee creation request</param>
+            <returns>Created employee profile</returns>
+        </member>
+        <member name="M:AccessControl.Api.Controllers.EmployeesController.GetEmployeePhoto(System.Int32)">
+            <summary>
+            Get employee profile photo
+            </summary>
+            <param name="id">Employee ID</param>
+            <returns>Employee photo URL or data</returns>
+        </member>
+        <member name="M:AccessControl.Api.Controllers.EmployeesController.UploadEmployeePhoto(System.Int32,AccessControl.Api.Controllers.UploadPhotoRequest)">
+            <summary>
+            Upload or update employee profile photo
+            </summary>
+            <param name="id">Employee ID</param>
+            <param name="photoUrl">Photo URL</param>
+            <param name="filename">Photo filename</param>
+            <param name="mimeType">Photo MIME type</param>
+            <param name="uploadedBy">Who uploaded the photo</param>
+            <returns>Updated photo information</returns>
+        </member>
+        <member name="M:AccessControl.Api.Controllers.EmployeesController.GetEmployeeBadgeHistory(System.Int32)">
+            <summary>
+            Get badge history for an employee
+            </summary>
+            <param name="id">Employee ID</param>
+            <returns>Badge history records</returns>
+        </member>
+        <member name="M:AccessControl.Api.Controllers.EmployeesController.GetEmployeeAccessHistory(System.Int32)">
+            <summary>
+            Get access history for an employee
+            </summary>
+            <param name="id">Employee ID</param>
+            <returns>Access history records</returns>
+        </member>
+        <member name="M:AccessControl.Api.Controllers.EmployeesController.GetEmployeeSwipes(System.Int32,System.Int32)">
+            <summary>
+            Get swipe records for an employee
+            </summary>
+            <param name="id">Employee ID</param>
+            <param name="days">Number of days to look back (default 30)</param>
+            <returns>Swipe records</returns>
+        </member>
+        <member name="M:AccessControl.Api.Controllers.EmployeesController.GetReaders">
+            <summary>
+            Get all readers
+            </summary>
+            <returns>List of readers</returns>
+        </member>
+        <member name="M:AccessControl.Api.Controllers.EmployeesController.GetAccessProfiles">
+            <summary>
+            Get all access profiles with reader assignments
+            </summary>
+            <returns>List of access profiles</returns>
+        </member>
+        <member name="M:AccessControl.Api.Controllers.EmployeesController.GetAccessProfileReaders">
+            <summary>
+            Get access profile readers relationships
+            </summary>
+            <returns>List of access profile reader assignments</returns>
+        </member>
+        <member name="M:AccessControl.Api.Controllers.EmployeesController.GetCardFieldsSummary">
+            <summary>
+            Get detailed card field summary combining readers, profiles, and assignments
+            </summary>
+            <returns>Card field summary data</returns>
+        </member>
+        <member name="T:AccessControl.Api.Controllers.UploadPhotoRequest">
+            <summary>
+            Request model for uploading employee photos
+            </summary>
+        </member>
+        <member name="T:AccessControl.Api.Controllers.HealthController">
+            <summary>
+            Health check controller for testing database connectivity
+            </summary>
+        </member>
+        <member name="M:AccessControl.Api.Controllers.HealthController.#ctor(AccessControl.Api.Data.ApplicationDbContext)">
+            <summary>
+            Initializes a new instance of HealthController
+            </summary>
+            <param name="context">Database context</param>
+        </member>
+        <member name="M:AccessControl.Api.Controllers.HealthController.GetHealth">
+            <summary>
+            Health check endpoint
+            </summary>
+            <returns>Health status</returns>
+        </member>
+        <member name="T:AccessControl.Api.Data.ApplicationDbContext">
+            <summary>
+            Application database context for access control system
+            </summary>
+        </member>
+        <member name="M:AccessControl.Api.Data.ApplicationDbContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{AccessControl.Api.Data.ApplicationDbContext})">
+            <summary>
+            Initializes a new instance of the ApplicationDbContext
+            </summary>
+            <param name="options">Database context options</param>
+        </member>
+        <member name="P:AccessControl.Api.Data.ApplicationDbContext.EmployeeProfiles">
+            <summary>
+            Employee profiles
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Data.ApplicationDbContext.Departments">
+            <summary>
+            Departments
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Data.ApplicationDbContext.Teams">
+            <summary>
+            Teams
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Data.ApplicationDbContext.Locations">
+            <summary>
+            Locations
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Data.ApplicationDbContext.AccessProfiles">
+            <summary>
+            Access profiles
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Data.ApplicationDbContext.EmployeeAccess">
+            <summary>
+            Employee access assignments
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Data.ApplicationDbContext.EmployeePhotos">
+            <summary>
+            Employee photos
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Data.ApplicationDbContext.BadgeHistory">
+            <summary>
+            Badge history records
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Data.ApplicationDbContext.AccessHistory">
+            <summary>
+            Access history records
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Data.ApplicationDbContext.Swipes">
+            <summary>
+            Swipe records
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Data.ApplicationDbContext.Readers">
+            <summary>
+            Readers (card readers and access control devices)
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Data.ApplicationDbContext.AccessProfileReaders">
+            <summary>
+            Access profile reader assignments
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Data.ApplicationDbContext.PersonProfiles">
+            <summary>
+            Person profiles (legacy)
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Data.ApplicationDbContext.Credentials">
+            <summary>
+            Credentials
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Data.ApplicationDbContext.Zones">
+            <summary>
+            Zones
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Data.ApplicationDbContext.Schedules">
+            <summary>
+            Schedules
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Data.ApplicationDbContext.ZonePermissions">
+            <summary>
+            Zone permissions
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Data.ApplicationDbContext.AccessAttempts">
+            <summary>
+            Access attempts
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Data.ApplicationDbContext.AuditLogs">
+            <summary>
+            Audit logs
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Data.ApplicationDbContext.AccessTemplates">
+            <summary>
+            Access templates
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Data.ApplicationDbContext.VisitorBadges">
+            <summary>
+            Visitor badges
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Data.ApplicationDbContext.ReasonCodes">
+            <summary>
+            Reason codes
+            </summary>
+        </member>
+        <member name="M:AccessControl.Api.Data.ApplicationDbContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            Configures the model for the database
+            </summary>
+            <param name="modelBuilder">Model builder</param>
+        </member>
+        <member name="T:AccessControl.Api.Models.EmployeeProfile">
+            <summary>
+            Employee profile entity matching the PostgreSQL employee_profiles table
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeeProfile.Id">
+            <summary>
+            Primary key identifier
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeeProfile.CompId">
+            <summary>
+            Company ID (8 characters: first letter of first name + first letter of last name + 6 digits)
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeeProfile.FirstName">
+            <summary>
+            Employee first name
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeeProfile.LastName">
+            <summary>
+            Employee last name
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeeProfile.Email">
+            <summary>
+            Employee email address
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeeProfile.HireDate">
+            <summary>
+            Date of hire
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeeProfile.ExpireDate">
+            <summary>
+            Badge expiration date (optional)
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeeProfile.DepartmentId">
+            <summary>
+            Department identifier
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeeProfile.TeamId">
+            <summary>
+            Team identifier (optional)
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeeProfile.LocationId">
+            <summary>
+            Location identifier
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeeProfile.IsActive">
+            <summary>
+            Whether the employee is active
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeeProfile.BadgeSerial">
+            <summary>
+            Badge serial number (optional)
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeeProfile.BadgePrinted">
+            <summary>
+            Whether the badge has been printed
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeeProfile.BadgePrintedAt">
+            <summary>
+            When the badge was printed (optional)
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeeProfile.CreatedAt">
+            <summary>
+            When the record was created
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeeProfile.UpdatedAt">
+            <summary>
+            When the record was last updated
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeeProfile.Department">
+            <summary>
+            Department navigation property
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeeProfile.Team">
+            <summary>
+            Team navigation property
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeeProfile.Location">
+            <summary>
+            Location navigation property
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeeProfile.EmployeeAccess">
+            <summary>
+            Employee access assignments
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeeProfile.Photos">
+            <summary>
+            Employee photos
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeeProfile.BadgeHistory">
+            <summary>
+            Badge history for this employee
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeeProfile.AccessHistory">
+            <summary>
+            Access history for this employee
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeeProfile.Swipes">
+            <summary>
+            Swipe records for this employee
+            </summary>
+        </member>
+        <member name="T:AccessControl.Api.Models.Department">
+            <summary>
+            Department entity
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Department.Id">
+            <summary>
+            Department identifier
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Department.Name">
+            <summary>
+            Department name
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Department.Description">
+            <summary>
+            Department description
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Department.CreatedAt">
+            <summary>
+            When the record was created
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Department.UpdatedAt">
+            <summary>
+            When the record was last updated
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Department.Employees">
+            <summary>
+            Employees in this department
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Department.Teams">
+            <summary>
+            Teams in this department
+            </summary>
+        </member>
+        <member name="T:AccessControl.Api.Models.Team">
+            <summary>
+            Team entity
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Team.Id">
+            <summary>
+            Team identifier
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Team.Name">
+            <summary>
+            Team name
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Team.DepartmentId">
+            <summary>
+            Department this team belongs to
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Team.Description">
+            <summary>
+            Team description
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Team.CreatedAt">
+            <summary>
+            When the record was created
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Team.UpdatedAt">
+            <summary>
+            When the record was last updated
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Team.Department">
+            <summary>
+            Department navigation property
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Team.Employees">
+            <summary>
+            Employees in this team
+            </summary>
+        </member>
+        <member name="T:AccessControl.Api.Models.Location">
+            <summary>
+            Location entity
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Location.Id">
+            <summary>
+            Location identifier
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Location.Name">
+            <summary>
+            Location name
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Location.Description">
+            <summary>
+            Location description
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Location.Address">
+            <summary>
+            Physical address
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Location.CreatedAt">
+            <summary>
+            When the record was created
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Location.UpdatedAt">
+            <summary>
+            When the record was last updated
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Location.Employees">
+            <summary>
+            Employees at this location
+            </summary>
+        </member>
+        <member name="T:AccessControl.Api.Models.AccessProfile">
+            <summary>
+            Access profile entity
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.AccessProfile.Id">
+            <summary>
+            Access profile identifier
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.AccessProfile.Name">
+            <summary>
+            Access profile name
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.AccessProfile.Description">
+            <summary>
+            Access profile description
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.AccessProfile.IsActive">
+            <summary>
+            Whether the access profile is active
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.AccessProfile.CreatedAt">
+            <summary>
+            When the record was created
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.AccessProfile.UpdatedAt">
+            <summary>
+            When the record was last updated
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.AccessProfile.EmployeeAccess">
+            <summary>
+            Employee access assignments for this profile
+            </summary>
+        </member>
+        <member name="T:AccessControl.Api.Models.EmployeeAccess">
+            <summary>
+            Employee access assignment entity
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeeAccess.Id">
+            <summary>
+            Assignment identifier
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeeAccess.EmployeeId">
+            <summary>
+            Employee identifier
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeeAccess.AccessProfileId">
+            <summary>
+            Access profile identifier
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeeAccess.AssignedDate">
+            <summary>
+            Date access was assigned
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeeAccess.ExpireDate">
+            <summary>
+            Access expiration date (optional)
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeeAccess.Active">
+            <summary>
+            Whether the access is currently active
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeeAccess.AssignedVia">
+            <summary>
+            How the access was assigned (manual, automation, bulk_import)
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeeAccess.CreatedAt">
+            <summary>
+            When the record was created
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeeAccess.UpdatedAt">
+            <summary>
+            When the record was last updated
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeeAccess.Employee">
+            <summary>
+            Employee navigation property
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeeAccess.AccessProfile">
+            <summary>
+            Access profile navigation property
+            </summary>
+        </member>
+        <member name="T:AccessControl.Api.Models.EmployeePhoto">
+            <summary>
+            Employee photo entity
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeePhoto.Id">
+            <summary>
+            Photo identifier
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeePhoto.EmployeeId">
+            <summary>
+            Employee identifier
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeePhoto.PhotoData">
+            <summary>
+            Binary photo data (alternative to URL)
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeePhoto.PhotoUrl">
+            <summary>
+            External photo URL (alternative to binary data)
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeePhoto.PhotoFilename">
+            <summary>
+            Original filename
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeePhoto.PhotoSize">
+            <summary>
+            File size in bytes
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeePhoto.MimeType">
+            <summary>
+            MIME type of the photo
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeePhoto.UploadedAt">
+            <summary>
+            When the photo was uploaded
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeePhoto.UploadedBy">
+            <summary>
+            Who uploaded the photo
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeePhoto.IsActive">
+            <summary>
+            Whether this is the active photo for the employee
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeePhoto.CreatedAt">
+            <summary>
+            When the record was created
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeePhoto.UpdatedAt">
+            <summary>
+            When the record was last updated
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.EmployeePhoto.Employee">
+            <summary>
+            Employee navigation property
+            </summary>
+        </member>
+        <member name="T:AccessControl.Api.Models.BadgeHistory">
+            <summary>
+            Badge history entity for tracking badge lifecycle
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.BadgeHistory.Id">
+            <summary>
+            Badge history identifier
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.BadgeHistory.EmployeeId">
+            <summary>
+            Employee identifier
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.BadgeHistory.BadgeSerial">
+            <summary>
+            Badge serial number
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.BadgeHistory.ActionType">
+            <summary>
+            Type of action (badge_issued, badge_updated, badge_deactivated, etc.)
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.BadgeHistory.PreviousBadgeSerial">
+            <summary>
+            Previous badge serial (if updating)
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.BadgeHistory.IssuedDate">
+            <summary>
+            Date the badge was issued
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.BadgeHistory.ExpiryDate">
+            <summary>
+            Badge expiration date
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.BadgeHistory.IssuedBy">
+            <summary>
+            Who issued the badge
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.BadgeHistory.Reason">
+            <summary>
+            Reason for the badge action
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.BadgeHistory.IsActive">
+            <summary>
+            Whether the badge is currently active
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.BadgeHistory.CreatedAt">
+            <summary>
+            When the record was created
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.BadgeHistory.Employee">
+            <summary>
+            Employee navigation property
+            </summary>
+        </member>
+        <member name="T:AccessControl.Api.Models.AccessHistory">
+            <summary>
+            Access history entity for tracking access profile changes
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.AccessHistory.Id">
+            <summary>
+            Access history identifier
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.AccessHistory.EmployeeId">
+            <summary>
+            Employee identifier
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.AccessHistory.AccessProfileId">
+            <summary>
+            Access profile identifier
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.AccessHistory.ActionType">
+            <summary>
+            Type of action (access_granted, access_revoked, access_updated, etc.)
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.AccessHistory.EffectiveDate">
+            <summary>
+            When the access change takes effect
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.AccessHistory.ExpiryDate">
+            <summary>
+            When the access expires (optional)
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.AccessHistory.GrantedBy">
+            <summary>
+            Who granted the access
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.AccessHistory.Reason">
+            <summary>
+            Reason for the access change
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.AccessHistory.PreviousAccessProfileId">
+            <summary>
+            Previous access profile (if updating)
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.AccessHistory.CreatedAt">
+            <summary>
+            When the record was created
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.AccessHistory.Employee">
+            <summary>
+            Employee navigation property
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.AccessHistory.AccessProfile">
+            <summary>
+            Access profile navigation property
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.AccessHistory.PreviousAccessProfile">
+            <summary>
+            Previous access profile navigation property
+            </summary>
+        </member>
+        <member name="T:AccessControl.Api.Models.Swipe">
+            <summary>
+            Swipe entity for tracking door access attempts
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Swipe.Id">
+            <summary>
+            Swipe identifier
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Swipe.EmployeeId">
+            <summary>
+            Employee identifier (nullable for unknown cards)
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Swipe.ReaderId">
+            <summary>
+            Reader identifier
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Swipe.SwipeTime">
+            <summary>
+            When the swipe occurred
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Swipe.CardNumber">
+            <summary>
+            Card number that was swiped
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Swipe.AccessGranted">
+            <summary>
+            Whether access was granted
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Swipe.DenialReason">
+            <summary>
+            Reason for denial (if access was denied)
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Swipe.CreatedAt">
+            <summary>
+            When the record was created
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Swipe.Employee">
+            <summary>
+            Employee navigation property
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Swipe.Reader">
+            <summary>
+            Reader navigation property
+            </summary>
+        </member>
+        <member name="T:AccessControl.Api.Models.Reader">
+            <summary>
+            Reader entity representing card readers and access control devices
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Reader.Id">
+            <summary>
+            Reader identifier
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Reader.LocationId">
+            <summary>
+            Location where the reader is installed
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Reader.Name">
+            <summary>
+            Reader name/description
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Reader.DeviceType">
+            <summary>
+            Type of device (card reader, biometric, etc.)
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Reader.Capabilities">
+            <summary>
+            Reader capabilities in JSON format
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Reader.ChannelId">
+            <summary>
+            Channel ID for hardware configuration
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Reader.CreatedAt">
+            <summary>
+            When the record was created
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Reader.UpdatedAt">
+            <summary>
+            When the record was last updated
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Reader.Location">
+            <summary>
+            Location where this reader is installed
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Reader.AccessProfileReaders">
+            <summary>
+            Access profile readers assignments
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.Reader.Swipes">
+            <summary>
+            Swipe records from this reader
+            </summary>
+        </member>
+        <member name="T:AccessControl.Api.Models.AccessProfileReader">
+            <summary>
+            Junction entity linking access profiles to readers
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.AccessProfileReader.AccessProfileId">
+            <summary>
+            Access profile identifier
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.AccessProfileReader.ReaderId">
+            <summary>
+            Reader identifier
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.AccessProfileReader.AccessProfile">
+            <summary>
+            Access profile navigation property
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.AccessProfileReader.Reader">
+            <summary>
+            Reader navigation property
+            </summary>
+        </member>
+        <member name="T:AccessControl.Api.Models.CreateEmployeeRequest">
+            <summary>
+            Request model for creating a new employee
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.CreateEmployeeRequest.FirstName">
+            <summary>
+            Employee first name
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.CreateEmployeeRequest.LastName">
+            <summary>
+            Employee last name
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.CreateEmployeeRequest.Email">
+            <summary>
+            Employee email address
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.CreateEmployeeRequest.DepartmentId">
+            <summary>
+            Department identifier
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.CreateEmployeeRequest.TeamId">
+            <summary>
+            Team identifier (optional)
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.CreateEmployeeRequest.LocationId">
+            <summary>
+            Location identifier
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.CreateEmployeeRequest.HireDate">
+            <summary>
+            Date of hire
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.CreateEmployeeRequest.ExpireDate">
+            <summary>
+            Badge expiration date (optional)
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.CreateEmployeeRequest.BadgeSerial">
+            <summary>
+            Badge serial number (optional)
+            </summary>
+        </member>
+        <member name="P:AccessControl.Api.Models.CreateEmployeeRequest.IsActive">
+            <summary>
+            Whether the employee profile is active
+            </summary>
+        </member>
+        <member name="T:AccessControl.Api.Services.ProfileService">
+            <summary>
+            Service for managing person profiles in the access control system
+            </summary>
+        </member>
+        <member name="M:AccessControl.Api.Services.ProfileService.#ctor(AccessControl.Api.Data.ApplicationDbContext)">
+            <summary>
+            Initializes a new instance of the ProfileService
+            </summary>
+            <param name="context">The database context</param>
+        </member>
+        <member name="M:AccessControl.Api.Services.ProfileService.GetEmployeeProfileAsync(System.Int32)">
+            <summary>
+            Gets an employee profile by ID
+            </summary>
+            <param name="id">The profile ID</param>
+            <returns>The employee profile if found, null otherwise</returns>
+        </member>
+        <member name="M:AccessControl.Api.Services.ProfileService.ListEmployeeProfilesAsync">
+            <summary>
+            Lists all employee profiles
+            </summary>
+            <returns>A collection of employee profiles</returns>
+        </member>
+        <member name="M:AccessControl.Api.Services.ProfileService.CreateEmployeeProfileAsync(AccessControl.Api.Models.EmployeeProfile)">
+            <summary>
+            Creates a new employee profile
+            </summary>
+            <param name="profile">The profile to create</param>
+            <returns>The created profile</returns>
+        </member>
+        <member name="M:AccessControl.Api.Services.ProfileService.UpdateEmployeeStatusAsync(System.Int32,System.Boolean)">
+            <summary>
+            Updates an employee profile's active status
+            </summary>
+            <param name="id">The profile ID</param>
+            <param name="isActive">The new active status</param>
+            <returns>The updated profile</returns>
+        </member>
+        <member name="M:AccessControl.Api.Services.ProfileService.GetProfileAsync(System.Guid)">
+            <summary>
+            Gets a person profile by ID (legacy)
+            </summary>
+            <param name="id">The profile ID</param>
+            <returns>The person profile if found, null otherwise</returns>
+        </member>
+        <member name="M:AccessControl.Api.Services.ProfileService.ListProfilesAsync">
+            <summary>
+            Lists all person profiles (legacy)
+            </summary>
+            <returns>A collection of person profiles</returns>
+        </member>
+        <member name="M:AccessControl.Api.Services.ProfileService.CreateProfileAsync(AccessControl.Api.Models.PersonProfile)">
+            <summary>
+            Creates a new person profile (legacy)
+            </summary>
+            <param name="profile">The profile to create</param>
+            <returns>The created profile</returns>
+        </member>
+        <member name="M:AccessControl.Api.Services.ProfileService.UpdateProfileStatusAsync(System.Guid,AccessControl.Api.Models.ProfileStatus)">
+            <summary>
+            Updates the status of a person profile (legacy)
+            </summary>
+            <param name="id">The profile ID</param>
+            <param name="status">The new status</param>
+            <returns>The updated profile</returns>
+        </member>
+        <member name="M:AccessControl.Api.Services.ProfileService.UpsertFromWorkdayAsync(System.Object)">
+            <summary>
+            Upserts a profile from Workday payload
+            </summary>
+            <param name="workdayPayload">The Workday data payload</param>
+            <returns>The upserted profile</returns>
+        </member>
+    </members>
+</doc>

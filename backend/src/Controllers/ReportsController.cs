@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using AccessControl.Api.Services;
 
 namespace AccessControl.Api.Controllers;
 
@@ -6,6 +7,13 @@ namespace AccessControl.Api.Controllers;
 [Route("api/[controller]")]
 public class ReportsController : ControllerBase
 {
+    private readonly ReportingService _reporting;
+
+    public ReportsController(ReportingService reporting)
+    {
+        _reporting = reporting;
+    }
+
     [HttpGet("access-summary")]
     public IActionResult GetAccessSummary() => throw new NotImplementedException();
 

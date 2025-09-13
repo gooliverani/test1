@@ -1,3 +1,5 @@
+using AccessControl.Api.Data;
+
 namespace AccessControl.Api.Services;
 
 public class ReportingService

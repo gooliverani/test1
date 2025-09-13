@@ -1,0 +1,58 @@
+openapi: 3.0.3
+info:
+  title: Physical Security Access Control API
+  version: 0.1.0
+servers:
+  - url: http://localhost:5000
+paths:
+  /api/profiles:
+    get:
+      summary: List person profiles
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PersonProfile'
+    post:
+      summary: Create person profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PersonProfileCreate'
+      responses:
+        '201': { description: Created }
+  /api/profiles/{id}:
+    get:
+      summary: Get profile by id
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { $ref: '#/components/schemas/PersonProfile' } } } }
+        '404': { description: Not Found }
+components:
+  schemas:
+    PersonProfile:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        displayName: { type: string }
+        type: { type: string, enum: [Employee, Contractor, Visitor] }
+        status: { type: string, enum: [Active, Suspended, Deactivated] }
+        department: { type: string }
+    PersonProfileCreate:
+      type: object
+      required: [displayName, type]
+      properties:
+        externalId: { type: string }
+        displayName: { type: string }
+        type: { type: string, enum: [Employee, Contractor, Visitor] }
+        department: { type: string }

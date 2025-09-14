@@ -85,3 +85,4 @@ C:\Users\vladi\test1\backend\src\obj\Debug\net8.0\AccessControl.Api.pdb
 C:\Users\vladi\test1\backend\src\obj\Debug\net8.0\AccessControl.Api.genruntimeconfig.cache
 C:\Users\vladi\test1\backend\src\obj\Debug\net8.0\ref\AccessControl.Api.dll
 C:\Users\vladi\test1\backend\src\bin\Debug\net8.0\appsettings.json
+C:\Users\vladi\test1\backend\src\obj\Debug\net8.0\AccessControl.Api.sourcelink.json

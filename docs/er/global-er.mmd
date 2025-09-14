@@ -1,0 +1,37 @@
+%% Global ER Diagram
+%% Generated 2025-09-14
+
+erDiagram
+    departments ||--o{ teams : contains
+    departments ||--o{ employee_profiles : employs
+    teams ||--o{ employee_profiles : assigns
+    locations ||--o{ employee_profiles : assigns
+    locations ||--o{ readers : hosts
+    locations ||--o{ controllers : hosts
+    controllers ||--o{ panels : manages
+    panels ||--o{ channels : provides
+    channels ||--o{ devices : connects
+    panels ||--o{ devices : optional
+    employee_profiles ||--o{ employee_photos : has
+    employee_profiles ||--o{ badge_history : tracks
+    employee_profiles ||--o{ access_history : tracks
+    employee_profiles ||--o{ employee_access : grants
+    access_profiles ||--o{ employee_access : referenced
+    access_profiles ||--o{ access_profile_readers : maps
+    readers ||--o{ access_profile_readers : linked
+    employee_profiles ||--o{ swipes : produces
+    readers ||--o{ swipes : logs
+    access_profiles ||--o{ access_rules : used_by
+    departments ||--o{ access_rules : qualifies
+    locations ||--o{ access_rules : qualifies
+    person_profiles ||--o{ credentials : owns
+    person_profiles ||--o{ zone_permissions : grants
+    zones ||--o{ zone_permissions : controls
+    schedules ||--o{ zone_permissions : constrains
+    credentials ||--o{ access_attempts : produces
+    zones ||--o{ access_attempts : occurs_in
+    person_profiles ||--o{ visitor_badges : may_have
+    person_profiles ||--o{ visitor_badges : hosts
+    app_users ||--o{ audit_log : emits
+    app_users ||--o{ user_roles : membership
+    app_roles ||--o{ user_roles : membership

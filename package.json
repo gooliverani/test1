@@ -1,0 +1,13 @@
+{
+  "name": "access-control-root",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Root workspace utilities (ER diagram export).",
+  "license": "UNLICENSED",
+  "scripts": {
+    "er:export": "powershell -ExecutionPolicy Bypass -File ./docs/er/export-er-diagrams.ps1 -OutDir ./docs/er/rendered"
+  },
+  "devDependencies": {
+    "@mermaid-js/mermaid-cli": "^10.9.1"
+  }
+}

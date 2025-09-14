@@ -1,0 +1,11 @@
+%% Generic Identity & Zones ER
+%% Generated 2025-09-14
+
+erDiagram
+    person_profiles ||--o{ credentials : provides
+    person_profiles ||--o{ zone_permissions : grants
+    zones ||--o{ zone_permissions : scoped
+    schedules ||--o{ zone_permissions : constrains
+    credentials ||--o{ access_attempts : attempts
+    zones ||--o{ access_attempts : target
+    person_profiles ||--o{ visitor_badges : holds

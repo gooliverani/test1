@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AccessControl.Tests.Contract")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d1a5a7d79ec82eeaee949b901e3039c05fbb9e0b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9a02790a9e6af9f962776a4e2eb572ad66184279")]
 [assembly: System.Reflection.AssemblyProductAttribute("AccessControl.Tests.Contract")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AccessControl.Tests.Contract")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,0 +1,11 @@
+%% Employee Domain ER
+%% Generated 2025-09-14
+
+erDiagram
+    employee_profiles ||--o{ employee_photos : has
+    employee_profiles ||--o{ badge_history : badge_events
+    employee_profiles ||--o{ access_history : access_events
+    employee_profiles ||--o{ employee_access : current_access
+    access_profiles ||--o{ employee_access : assigned
+    employee_profiles ||--o{ swipes : swipe
+    readers ||--o{ swipes : records

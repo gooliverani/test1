@@ -1,0 +1,11 @@
+%% Access Mapping ER
+%% Generated 2025-09-14
+
+erDiagram
+    access_profiles ||--o{ access_profile_readers : binds
+    readers ||--o{ access_profile_readers : bound
+    access_profiles ||--o{ employee_access : grants
+    employee_profiles ||--o{ employee_access : holds
+    access_profiles ||--o{ access_rules : default_rule
+    departments ||--o{ access_rules : qualifies
+    locations ||--o{ access_rules : qualifies

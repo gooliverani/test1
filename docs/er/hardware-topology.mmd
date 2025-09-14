@@ -1,0 +1,10 @@
+%% Hardware Topology ER
+%% Generated 2025-09-14
+
+erDiagram
+    locations ||--o{ controllers : contains
+    controllers ||--o{ panels : houses
+    panels ||--o{ channels : routes
+    channels ||--o{ devices : attaches
+    panels ||--o{ devices : optional_attach
+    locations ||--o{ readers : hosts

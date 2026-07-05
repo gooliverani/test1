@@ -1,0 +1,6 @@
+# Environment files — never commit, even when they hold nothing sensitive.
+# (frontend/.env and frontend/.env.local were tracked until 2026-07-05;
+#  both were verified secret-free before untracking.)
+.env
+.env.*
+!.env.example
